@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="DebugReleaseAssignment/DebugReleaseAssignment.vcxproj" Id="b66cb55f-0010-4496-ab3e-441b3ba3a17f" />
+</Solution>
