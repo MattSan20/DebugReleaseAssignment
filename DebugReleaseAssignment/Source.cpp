@@ -3,6 +3,7 @@
 #include <sstream>   // for stringstream, splitting a string apart
 #include <vector>    // for vector, a resizable list
 #include <string>
+#define PRE_RELEASE
 using namespace std;
 
 //Groups a student's first and last name together into a single string, since they belong to the same person
@@ -10,8 +11,8 @@ struct STUDENT_DATA
 {
 	string firstName;
 	string lastName;
+	string email; //Stays empty unless Pre-Release mode fills it in
 };
-
 
 
 int main()
@@ -35,6 +36,47 @@ int main()
 
 	inputFile.close(); // Close the input file
 
+	//Reports what version is runnbing - only possible since we defined it
+    #ifdef PRE_RELEASE
+	cout << "Running PRE-RELEASE version" << endl;
+    #else
+	cout << "Running STANDARD version" << endl;
+    #endif
+
+    #ifdef PRE_RELEASE
+	ifstream emailFile("StudentData_Emails.txt");
+	string emailLine;
+	int index = 0; //Tracks which student we're matching it with
+	//matches emails to each students by line position
+	//assuming both files list students in the same order
+	while (getline(emailFile, emailLine) && index < students.size())
+	{
+		students[index].email = emailLine;
+		index++;
+	}
+
+	emailFile.close();
+    #endif // PRE_RELEASE
+
+
+
+
+	//_Debug only exists in Debug builds, so the whole block gets left out when compiled as Release. 
+    #ifdef _DEBUG
+	cout << "----- Debug Mode: List of Students -----" << endl;
+	for (int i = 0; i < students.size(); i++) //Walk through every student in the list
+	{
+		cout << students[i].firstName << "" << students[i].lastName;
+		
+		//only prints an email if there actually is one loaded (PRE RELEASE MODE)
+		if (!students[i].email.empty())
+		{
+			cout << " - " << students[i].email;
+		}
+		cout << endl;
+	}
+    #endif // _DEBUG
+
 	
-	
+	return 1;
 }
