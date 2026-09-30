@@ -35,6 +35,18 @@ int main()
 
 	inputFile.close(); // Close the input file
 
+	// _DEBUG only exists in Debug builds, so this whole block gets
+	// left out entirely when compiled as Release
+    #ifdef _DEBUG
+	cout << "----- DEBUG MODE: Student List -----" << endl;
+	for (int i = 0; i < students.size(); i++) // walk through every student
+	{
+		cout << students[i].firstName << " " << students[i].lastName << endl;
+	}
+    #endif
+
+	return 1;
+
 	
 	
 }
