@@ -51,7 +51,16 @@ int main()
 	//assuming both files list students in the same order
 	while (getline(emailFile, emailLine) && index < students.size())
 	{
-		students[index].email = emailLine;
+		stringstream emailStream(emailLine); // lets us split this line apart too
+		string discardLastName, discardFirstName, actualEmail;
+
+		// The file is formatted as LastName, FirstName,Email - so we skip
+        // the first two comma-separated fields and keep only the email
+		getline(emailStream, discardLastName, ',');
+		getline(emailStream, discardFirstName, ',');
+		getline(emailStream, actualEmail);
+
+		students[index].email = actualEmail;
 		index++;
 	}
 
